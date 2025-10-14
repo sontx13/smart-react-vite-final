@@ -1,6 +1,6 @@
 import DataTable from "@/components/client/data-table";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { fetchQA } from "@/redux/slice/qaSlide";
+import { fetchQA } from "@/redux/slice/QASlide";
 import { IQA } from "@/types/backend";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { ActionType, ProColumns, ProForm, ProFormSelect } from '@ant-design/pro-components';

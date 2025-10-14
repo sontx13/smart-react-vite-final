@@ -7,7 +7,7 @@ import accountReducer from './slice/accountSlide';
 import companyReducer from './slice/companySlide';
 import appReducer from './slice/appSlide';
 import zmauReducer from './slice/zmauSlide';
-import qaReducer from './slice/qaSlide';
+import qaReducer from './slice/QASlide';
 import newReducer from './slice/newSlide';
 import inforReducer from './slice/inforSlide';
 import hotlineReducer from './slice/hotlineSlide';
