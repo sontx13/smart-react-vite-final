@@ -35,7 +35,7 @@ const initialState: IState = {
 
 
 export const qaSlide = createSlice({
-    name: 'qa',
+    name: 'qa', 
     initialState,
     // The `reducers` field lets us define reducers and generate associated actions
     reducers: {
