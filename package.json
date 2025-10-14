@@ -8,8 +8,9 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "build-uat": "tsc && vite build --mode uat",
+    "build-dev": "tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
