@@ -294,7 +294,7 @@ const ViewUpsertHotline = (props: any) => {
                             </Col>
 
                              <Col span={24} md={6}>
-                                <ProFormDigit
+                                <ProFormText
                                     label="Hotline"
                                     name="phone_number"
                                     rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}
