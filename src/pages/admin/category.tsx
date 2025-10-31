@@ -1,13 +1,13 @@
 import DataTable from "@/components/client/data-table";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { fetchCategory } from "@/redux/slice/categorySlide";
-import { ICategory } from "@/types/backend";
-import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import { IArticle, ICategory } from "@/types/backend";
+import { DeleteOutlined, EditOutlined, FileSyncOutlined, PlusOutlined } from "@ant-design/icons";
 import { ActionType, ProColumns, ProForm, ProFormSelect } from '@ant-design/pro-components';
 import { Button, Popconfirm, Space, Tag, message, notification } from "antd";
 import { useState, useRef } from 'react';
 import dayjs from 'dayjs';
-import { callDeleteCategory, callFetchApp } from "@/config/api";
+import { callCreateArticle, callDeleteCategory, callFetchApp } from "@/config/api";
 import queryString from 'query-string';
 import Access from "@/components/share/access";
 import { ALL_PERMISSIONS } from "@/config/permissions";
@@ -47,6 +47,80 @@ const CategoryPage = () => {
                     description: res.message
                 });
             }
+        }
+    }
+
+    const handleSyncArticleByCategory = async (url: string, cateName: string | undefined, cateId: string | undefined) => {
+  
+        let totalSaved = 0;
+        if (url) {
+                
+                try {
+                    //const response = await fetch(cate.url);
+                    const response = await fetch(`https://vnptbacninh.com/api/v1/proxy/fetch?url=${url.trim()}`, {
+                        headers: {
+                            'User-Agent': 'Mozilla/5.0',
+                            'Accept': 'application/json, text/plain, */*',
+                        },
+                        });
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const json = await response.json();
+        
+                    // Duyệt từng bài viết
+                    if (json.items && Array.isArray(json.items)) {
+                    for (const art of json.items) {
+                        const article: IArticle = {
+                        idArticle: art.id,
+                        title: art.title,
+                        titleCut: art.title_cut || art.title,
+                        imageUrl: art.imageURL || "",
+                        summary: art.summary || "",
+                        createdDate: art.createdDate || "",
+                        urlDetail: art.urlDetail || "",
+                        content: art.content || "",
+                        isNew: art.isNew || "",
+                        source: art.source || "",
+                        author: art.author || "",
+                        strucId: art.strucId || "",
+                        viewCount: art.viewCount || 0,
+                        cateName: cateName || "",
+                        cateId: Number(cateId) || 0,
+                        otherProps: JSON.stringify(art.otherProps || {}),
+                        timeSync: new Date().toISOString(),
+                        app: {
+                            id: "11"
+                        },
+                        category: {
+                            id: String(cateId)
+                        },
+                        };
+        
+                        try {
+                        const resCreate = await callCreateArticle(article);
+                        if (resCreate?.data) {
+                            totalSaved++;
+                            console.log(`✅ Đã lưu: ${article.title}`);
+                        } else {
+                            console.warn(`⚠️ Lưu thất bại: ${article.title}`);
+                        }
+                        } catch (err) {
+                        console.error(`❌ Lỗi khi lưu: ${article.title}`, err);
+                        }
+                    }
+                    }
+                } catch (err) {
+                    console.error(`❌ Lỗi fetch URL: ${url}`, err);
+                }
+
+            notification.success({
+            message: "Đồng bộ thành công",
+            description: `Đã lưu ${totalSaved} bài viết vào cơ sở dữ liệu.`,
+            });
+        }
+        else{
+            notification.error({
+            message: "Không có url đồng bộ",
+            });
         }
     }
 
@@ -171,6 +245,30 @@ const CategoryPage = () => {
             width: 50,
             render: (_value, entity, _index, _action) => (
                 <Space>
+                     < Access
+                        permission={ALL_PERMISSIONS.CATEGORIES.UPDATE}
+                        hideChildren
+                    >
+                        <Popconfirm
+                            placement="leftTop"
+                            title={"Xác nhận đồng bộ tin tức category"}
+                            description={"Bạn có chắc chắn muốn đồng bộ tin tức theo chuyên mục này ?"}
+                            onConfirm={() => handleSyncArticleByCategory(entity.url,entity.name, entity.id )}
+                            okText="Xác nhận"
+                            cancelText="Hủy"
+                        >
+                            <span style={{ cursor: "pointer", margin: "0 10px" }}>
+                                <FileSyncOutlined
+                                    style={{
+                                        fontSize: 20,
+                                        color: 'green',
+                                    }}
+                                    type="Đồng bộ tin tức theo chuyên mục"
+                                />
+                            </span>
+                        </Popconfirm>
+                       
+                    </Access >
                     < Access
                         permission={ALL_PERMISSIONS.CATEGORIES.UPDATE}
                         hideChildren

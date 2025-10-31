@@ -1,4 +1,4 @@
-import { IBackendRes, ICompany, IAccount, IUser, IModelPaginate, IGetAccount, IJob, IResume, IPermission, IRole, ISkill, ISubscribers, IExam, IQuestion, IAnswer, ISubmission, IApp, IZmau, IQA, INew, IInfor, IHotline, IConfig, ICategory, IBanner } from '@/types/backend';
+import { IBackendRes, ICompany, IAccount, IUser, IModelPaginate, IGetAccount, IJob, IResume, IPermission, IRole, ISkill, ISubscribers, IExam, IQuestion, IAnswer, ISubmission, IApp, IZmau, IQA, INew, IInfor, IHotline, IConfig, ICategory, IBanner, IArticle } from '@/types/backend';
 import axios from 'config/axios-customize';
 
 /**
@@ -350,6 +350,25 @@ export const callFetchQA = (query: string) => {
 
 export const callFetchQAById = (id: string) => {
     return axios.get<IBackendRes<IQA>>(`/api/v1/qas/${id}`);
+}
+/**
+ * 
+Module Sync Articles
+ */
+export const callCreateArticle = (article: IArticle) => {
+    return axios.post<IBackendRes<IArticle>>('/api/v1/articles', { ...article })
+}
+
+export const callDeleteArticle = (id: string) => {
+    return axios.delete<IBackendRes<IArticle>>(`/api/v1/articles/${id}`);
+}
+
+export const callFetchArticle = (query: string) => {
+    return axios.get<IBackendRes<IModelPaginate<IArticle>>>(`/api/v1/articles?${query}`);
+}
+
+export const callFetchArticleById = (id: string) => {
+    return axios.get<IBackendRes<IArticle>>(`/api/v1/articles/${id}`);
 }
 
 

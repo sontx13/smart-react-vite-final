@@ -45,6 +45,7 @@ import ViewUpsertHotline from './components/admin/hotline/upsert.hotline';
 import ConfigPage from './pages/admin/config';
 import ViewUpsertConfig from './components/admin/config/upsert.config';
 import CategoryPage from './pages/admin/category';
+import ArticlePage from './pages/admin/article';
 import ViewUpsertBanner from './components/admin/banner/upsert.banner';
 import BannerPage from './pages/admin/banner';
 import ViewUpsertCategory from './components/admin/category/upsert.category';
@@ -160,6 +161,13 @@ export default function App() {
           element:
             <ProtectedRoute>
               <ZmauPage />
+            </ProtectedRoute>
+        },
+        {
+          path: "article",
+          element:
+            <ProtectedRoute>
+              <ArticlePage />
             </ProtectedRoute>
         },
          {

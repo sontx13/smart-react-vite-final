@@ -19,7 +19,9 @@ import {
     PhoneOutlined,
     ToolOutlined,
     ReadOutlined,
-    FileImageOutlined
+    FileImageOutlined,
+    FileSyncOutlined,
+    CloudSyncOutlined
 } from '@ant-design/icons';
 import { Layout, Menu, Dropdown, Space, message, Avatar, Button } from 'antd';
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -41,6 +43,8 @@ const LayoutAdmin = () => {
     const user = useAppSelector(state => state.account.user);
 
     const permissions = useAppSelector(state => state.account.user.role.permissions);
+
+    //console.log("permissions=="+permissions);
     const [menuItems, setMenuItems] = useState<MenuProps['items']>([]);
 
     const navigate = useNavigate();
@@ -73,6 +77,11 @@ const LayoutAdmin = () => {
             const viewNew = permissions?.find(item =>
                 item.apiPath === ALL_PERMISSIONS.NEWS.GET_PAGINATE.apiPath
                 && item.method === ALL_PERMISSIONS.NEWS.GET_PAGINATE.method
+            )
+
+            const viewArticle = permissions?.find(item =>
+                item.apiPath === ALL_PERMISSIONS.ARTICLES.GET_PAGINATE.apiPath
+                && item.method === ALL_PERMISSIONS.ARTICLES.GET_PAGINATE.method
             )
 
             const viewInfor = permissions?.find(item =>
@@ -170,6 +179,11 @@ const LayoutAdmin = () => {
                     label: <Link to='/admin/category'>Chuyên mục</Link>,
                     key: '/admin/category',
                     icon: <ReadOutlined /> ,
+                }] : []),
+                    ...(viewArticle || ACL_ENABLE === 'false' ? [{
+                    label: <Link to='/admin/article'>Tin đồng bộ</Link>,
+                    key: '/admin/article',
+                    icon: <CloudSyncOutlined />,
                 }] : []),
                 ...(viewApp || ACL_ENABLE === 'false' ? [{
                     label: <Link to='/admin/app'>App</Link>,

@@ -23,6 +23,10 @@ export const ALL_PERMISSIONS = {
         UPDATE: { method: "PUT", apiPath: '/api/v1/news', module: "NEWS" },
         DELETE: { method: "DELETE", apiPath: '/api/v1/news/{id}', module: "NEWS" },
     },
+    ARTICLES: {
+        GET_PAGINATE: { method: "GET", apiPath: '/api/v1/articles', module: "ARTICLES" },
+        DELETE: { method: "DELETE", apiPath: '/api/v1/articles/{id}', module: "ARTICLES" },
+    },
     INFORS: {
         GET_PAGINATE: { method: "GET", apiPath: '/api/v1/infors', module: "INFORS" },
         CREATE: { method: "POST", apiPath: '/api/v1/infors', module: "INFORS" },
@@ -121,6 +125,7 @@ export const ALL_MODULES = {
     CONFIGS: 'CONFIGS',
     BANNERS: 'BANNERS',
     NEWS: 'NEWS',
+    ARTICLES: 'ARTICLES',
     CATEGORIES: 'CATEGORIES',
     QAS: 'QAS',
     INFORS: 'INFORS',

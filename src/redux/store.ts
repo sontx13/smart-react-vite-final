@@ -10,6 +10,7 @@ import zmauReducer from './slice/zmauSlide';
 import qaReducer from './slice/QASlide';
 import newReducer from './slice/newSlide';
 import inforReducer from './slice/inforSlide';
+import articleReducer from './slice/articleSlide';
 import hotlineReducer from './slice/hotlineSlide';
 import configReducer from './slice/configSlide';
 import categoryReducer from './slice/categorySlide';
@@ -37,6 +38,7 @@ export const store = configureStore({
     hotline: hotlineReducer,
     config: configReducer,
     category: categoryReducer,
+    article: articleReducer,
     banner: bannerReducer,
     exam: examReducer,
     question: questionReducer,

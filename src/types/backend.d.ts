@@ -162,6 +162,33 @@ export interface INew {
     updatedAt?: string;
 }
 
+export interface IArticle {
+    id?: string;
+    idArticle: string;
+    title: string;
+    titleCut: string;
+    imageUrl: string;
+    summary: string;
+    createdDate: string;
+    urlDetail: string;
+    source: string;
+    content: string;
+    isNew: string;
+    strucId: string;
+    author: string;
+    viewCount: number;
+    cateName: string;
+    cateId: number;
+    otherProps: string;
+    app?: {
+        id: string;
+    }
+    category?: {
+        id: string;
+    }
+    timeSync: string;
+}
+
 export interface IInfor {
     id?: string;
     name?: string;
