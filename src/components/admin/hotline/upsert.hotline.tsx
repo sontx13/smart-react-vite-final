@@ -132,7 +132,6 @@ const ViewUpsertHotline = (props: any) => {
       
         const hotline = {
          name: values.name,
-          url: values.url,
           type: values.type,
           phone_number: values.phone_number,
           sort: values.sort,
@@ -302,14 +301,6 @@ const ViewUpsertHotline = (props: any) => {
                                 />
                             </Col>
 
-                           <Col span={24} md={6}>
-                                <ProFormText
-                                    label="Url"
-                                    name="url"
-                                    rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}
-                                    placeholder="Url"
-                                />
-                            </Col>
                             
                             <Col span={24} md={6}>
                                 <ProFormDigit

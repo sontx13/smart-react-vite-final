@@ -24,8 +24,8 @@ const ViewUpsertQA = (props: any) => {
     const [apps, setApps] = useState<IAppSelect[]>([]);
     
     const navigate = useNavigate();
-    const [value_q, setValueQ] = useState<string>("");
-    const [value_a, setValueA] = useState<string>("");
+    const [valueQ, setValueQ] = useState<string>("");
+    const [valueA, setValueA] = useState<string>("");
 
     let location = useLocation();
     let params = new URLSearchParams(location.search);
@@ -59,8 +59,8 @@ const ViewUpsertQA = (props: any) => {
                     setDataUpdate(res.data);
                     
 
-                    setValueA(res.data.content_a); 
-                    setValueQ(res.data.content_q); 
+                    setValueA(res.data.contentA); 
+                    setValueQ(res.data.contentQ); 
                     
                     setApps([
                         {
@@ -120,14 +120,14 @@ const ViewUpsertQA = (props: any) => {
         }
       
         const qa = {
-          name_q: values.name_q,
-          email_q: values.email_q,
-          phone_q: values.phone_q,
-          time_q: values.time_q,
-          name_a: values.name_a,
-          time_a: values.time_a,
-          content_q: value_q,
-          content_a: value_a,
+          nameQ: values.nameQ,
+          emailQ: values.emailQ,
+          phoneQ: values.phoneQ,
+          timeQ: values.timeQ,
+          nameA: values.nameA,
+          timeA: values.timeA,
+          contentQ: valueQ,
+          contentA: valueA,
           app: finalAppParsed,
           active: values.active,
         };
@@ -200,7 +200,7 @@ const ViewUpsertQA = (props: any) => {
                             <Col span={24} md={6}>
                                 <ProFormText
                                     label="Người hỏi"
-                                    name="name_q"
+                                    name="nameQ"
                                     rules={[
                                         { required: true, message: 'Vui lòng không bỏ trống' },
                                     ]}
@@ -211,7 +211,7 @@ const ViewUpsertQA = (props: any) => {
                             <Col span={24} md={6}>
                                 <ProFormText
                                     label="Email Người hỏi"
-                                    name="email_q"
+                                    name="emailQ"
                                     rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}
                                     placeholder="Cấp độ"
                                 />
@@ -219,15 +219,15 @@ const ViewUpsertQA = (props: any) => {
                             <Col span={24} md={6}>
                                 <ProFormText
                                     label="Phone Người hỏi"
-                                    name="phone_q"
+                                    name="phoneQ"
                                     rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}
                                     placeholder="Phone Người hỏi"
                                 />
                             </Col>
-                             <Col span={24} md={6}>
+                             {/* <Col span={24} md={6}>
                                <ProFormDatePicker
                                 label="Thời gian hỏi"
-                                name="time_q"
+                                name="timeQ"
                                 fieldProps={{
                                     format: 'DD/MM/YYYY HH:mm',
                                     showTime: true,
@@ -235,7 +235,7 @@ const ViewUpsertQA = (props: any) => {
                                 rules={[{ required: true, message: 'Vui lòng chọn thời gian hỏi' }]}
                                 placeholder="dd/mm/yyyy hh:mm"
                                 />
-                            </Col>
+                            </Col> */}
                            
 
                         </Row>
@@ -244,16 +244,16 @@ const ViewUpsertQA = (props: any) => {
                             <Col span={24} md={6}>
                                 <ProFormText
                                     label="Người trả lời"
-                                    name="name_a"
+                                    name="nameA"
                                     rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}
                                     placeholder="Nhập Người trả lời"
                                 />
                             </Col>
 
-                            <Col span={24} md={6}>
+                            {/* <Col span={24} md={6}>
                                  <ProFormDatePicker
                                      label="Thời gian trả lời"
-                                    name="time_a"
+                                    name="timeA"
                                     fieldProps={{
                                         format: 'DD/MM/YYYY HH:mm',
                                         showTime: true,
@@ -262,7 +262,7 @@ const ViewUpsertQA = (props: any) => {
                                     placeholder="dd/mm/yyyy hh:mm"
                                 />
                                 
-                            </Col>
+                            </Col> */}
 
                             {(dataUpdate?.id || !id) &&
                                 <Col span={24} md={6}>
@@ -321,26 +321,26 @@ const ViewUpsertQA = (props: any) => {
                             </Col>
                             <Col span={24}>
                                 <ProForm.Item
-                                    name="content_q"
+                                    name="contentQ"
                                     label="Nội dung câu hỏi"
                                     rules={[{ required: true, message: 'Vui lòng nhập Nội dung câu hỏi!' }]}
                                 >
                                     <ReactQuill
                                         theme="snow"
-                                        value={value_q}
+                                        value={valueQ}
                                         onChange={setValueQ}
                                     />
                                 </ProForm.Item>
                             </Col>
                              <Col span={24}>
                                 <ProForm.Item
-                                    name="content_a"
+                                    name="contentA"
                                     label="Nội dung trả lời"
                                     rules={[{ required: true, message: 'Vui lòng nhập Nội dung trả lời!' }]}
                                 >
                                     <ReactQuill
                                         theme="snow"
-                                        value={value_a}
+                                        value={valueA}
                                         onChange={setValueA}
                                     />
                                 </ProForm.Item>

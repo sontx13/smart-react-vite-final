@@ -115,14 +115,14 @@ export interface IZmau {
 
 export interface IQA {
     id?: string;
-    name_q?: string;
-    email_q: string;
-    phone_q: string;
-    content_q: string;
-    time_q: Date;
-    name_a?: string;
-    time_a: Date;
-    content_a: string;
+    nameQ?: string;
+    emailQ: string;
+    phoneQ: string;
+    contentQ: string;
+    timeQ: Date;
+    nameA?: string;
+    timeA: Date;
+    contentA: string;
     app?: {
         id: string;
         name: string;

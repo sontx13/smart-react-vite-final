@@ -114,48 +114,48 @@ const QAPage = () => {
         },
         {
             title: 'Người hỏi',
-            dataIndex: 'name_q',
+            dataIndex: 'nameQ',
             sorter: true,
         },
         {
             title: 'Email người hỏi',
-            dataIndex: 'email_q',
+            dataIndex: 'emailQ',
             sorter: true,
             hideInSearch: true,
         },
         {
             title: 'Phone người hỏi',
-            dataIndex: 'phone_q',
+            dataIndex: 'phoneQ',
             sorter: true,
             hideInSearch: true,
         },
        
          {
             title: 'Thời gian hỏi',
-            dataIndex: 'time_q',
+            dataIndex: 'timeQ',
             width: 200,
             sorter: true,
             render: (text, record, index, action) => {
                 return (
-                    <>{record.time_q ? dayjs(record.time_q).format('DD-MM-YYYY HH:mm:ss') : ""}</>
+                    <>{record.timeQ ? dayjs(record.timeQ).format('DD-MM-YYYY HH:mm:ss') : ""}</>
                 )
             },
             hideInSearch: true,
         },
         {
             title: 'Người trả lời',
-            dataIndex: 'name_a',
+            dataIndex: 'nameA',
             sorter: true,
             hideInSearch: true,
         },
         {
             title: 'Thời gian trả lời',
-            dataIndex: 'time_a',
+            dataIndex: 'timeA',
             width: 200,
             sorter: true,
             render: (text, record, index, action) => {
                 return (
-                    <>{record.time_a ? dayjs(record.time_a).format('DD-MM-YYYY HH:mm:ss') : ""}</>
+                    <>{record.timeA ? dayjs(record.timeA).format('DD-MM-YYYY HH:mm:ss') : ""}</>
                 )
             },
             hideInSearch: true,
