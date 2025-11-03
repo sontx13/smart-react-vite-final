@@ -296,7 +296,7 @@ const ArticlePage = () => {
             render: (_value, entity, _index, _action) => (
                 <Space>
                     <Access
-                        permission={ALL_PERMISSIONS.NEWS.DELETE}
+                        permission={ALL_PERMISSIONS.ARTICLES.DELETE}
                         hideChildren
                     >
                         <Popconfirm
@@ -409,7 +409,7 @@ const ArticlePage = () => {
     return (
         <div>
             <Access
-                permission={ALL_PERMISSIONS.NEWS.GET_PAGINATE}
+                permission={ALL_PERMISSIONS.ARTICLES.GET_PAGINATE}
             >
                 <DataTable<IArticle>
                     actionRef={tableRef}
