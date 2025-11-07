@@ -33,6 +33,19 @@ const CategoryPage = () => {
     //console.log("is_admin=="+is_admin);
     //console.log("app=="+ JSON.stringify(app));
 
+    const convertToInstant = (dateStr?: string): Date | null => {
+  if (!dateStr) return null;
+
+  const parts = dateStr.trim().split(" ");
+  if (parts.length !== 2) return null;
+
+  const [datePart, timePart] = parts;
+  const [day, month, year] = datePart.split("/").map(Number);
+  const [hour, minute] = timePart.split(":").map(Number);
+
+  return new Date(year, month - 1, day, hour, minute);
+};
+
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const handleDeleteCategory = async (id: string | undefined) => {
@@ -75,7 +88,7 @@ const CategoryPage = () => {
                         titleCut: art.title_cut || art.title,
                         imageUrl: art.imageURL || "",
                         summary: art.summary || "",
-                        createdDate: art.createdDate || "",
+                        createdDate: convertToInstant(art.createdDate) || new Date(),
                         urlDetail: art.urlDetail || "",
                         content: art.content || "",
                         isNew: art.isNew || "",

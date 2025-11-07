@@ -50,6 +50,20 @@ const ArticlePage = () => {
            }
        }
 
+const convertToInstant = (dateStr?: string): Date | null => {
+  if (!dateStr) return null;
+
+  const parts = dateStr.trim().split(" ");
+  if (parts.length !== 2) return null;
+
+  const [datePart, timePart] = parts;
+  const [day, month, year] = datePart.split("/").map(Number);
+  const [hour, minute] = timePart.split(":").map(Number);
+
+  return new Date(year, month - 1, day, hour, minute);
+};
+
+
     const handleSyncArticle = async () => {
     try {
         const res = await callFetchCategory(`page=1&size=100`);
@@ -88,7 +102,8 @@ const ArticlePage = () => {
                 titleCut: art.title_cut || art.title,
                 imageUrl: art.imageURL || "",
                 summary: art.summary || "",
-                createdDate: art.createdDate || "",
+                createdDate: convertToInstant(art.createdDate) || new Date(),
+                // createdDate: art.createdDate || "",
                 urlDetail: art.urlDetail || "",
                 content: art.content || "",
                 isNew: art.isNew || "",
@@ -270,12 +285,18 @@ const ArticlePage = () => {
             },
             sorter: true,
             },
-         {
+        {
             title: 'Ngày đăng',
             dataIndex: 'createdDate',
+            width: 200,
             sorter: true,
+            render: (text, record, index, action) => {
+                return (
+                    <>{record.createdDate ? dayjs(record.createdDate).format('DD-MM-YYYY HH:mm:ss') : ""}</>
+                )
+            },
+            hideInSearch: true,
         },
-       
         {
             title: 'Thời gian đồng bộ',
             dataIndex: 'timeSync',

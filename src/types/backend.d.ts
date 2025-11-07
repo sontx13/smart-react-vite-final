@@ -169,7 +169,7 @@ export interface IArticle {
     titleCut: string;
     imageUrl: string;
     summary: string;
-    createdDate: string;
+    createdDate?: Date;
     urlDetail: string;
     source: string;
     content: string;
