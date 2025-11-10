@@ -2,9 +2,9 @@ import DataTable from "@/components/client/data-table";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { fetchQA } from "@/redux/slice/QASlide";
 import { IQA } from "@/types/backend";
-import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, PlusOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import { ActionType, ProColumns, ProForm, ProFormSelect } from '@ant-design/pro-components';
-import { Button, Popconfirm, Space, Tag, message, notification } from "antd";
+import { Button, Popconfirm, Space, Tag, Tooltip, message, notification } from "antd";
 import { useState, useRef } from 'react';
 import dayjs from 'dayjs';
 import { callDeleteQA, callFetchApp } from "@/config/api";
@@ -116,13 +116,25 @@ const QAPage = () => {
             title: 'Người hỏi',
             dataIndex: 'nameQ',
             sorter: true,
-        },
-        {
-            title: 'Email người hỏi',
-            dataIndex: 'emailQ',
-            sorter: true,
             hideInSearch: true,
         },
+    
+{
+    title: 'Câu hỏi',
+    dataIndex: 'contentQ',
+    sorter: true,
+    render: (text: any) => {
+        // Ép kiểu sang string, đề phòng khi text là number, boolean hoặc ReactNode
+        const content = typeof text === 'string' ? text : String(text ?? '');
+        const shortText = content.length > 200 ? content.substring(0, 200) + '...' : content;
+
+        return (
+            <Tooltip title={content} overlayStyle={{ maxWidth: '500px', whiteSpace: 'normal', wordBreak: 'break-word' }}>
+                <span>{shortText}</span>
+            </Tooltip>
+        );
+    },
+},
         {
             title: 'Phone người hỏi',
             dataIndex: 'phoneQ',
@@ -174,30 +186,7 @@ const QAPage = () => {
             hideInSearch: true,
         },
 
-        {
-            title: 'CreatedAt',
-            dataIndex: 'createdAt',
-            width: 200,
-            sorter: true,
-            render: (text, record, index, action) => {
-                return (
-                    <>{record.createdAt ? dayjs(record.createdAt).format('DD-MM-YYYY HH:mm:ss') : ""}</>
-                )
-            },
-            hideInSearch: true,
-        },
-        {
-            title: 'UpdatedAt',
-            dataIndex: 'updatedAt',
-            width: 200,
-            sorter: true,
-            render: (text, record, index, action) => {
-                return (
-                    <>{record.updatedAt ? dayjs(record.updatedAt).format('DD-MM-YYYY HH:mm:ss') : ""}</>
-                )
-            },
-            hideInSearch: true,
-        },
+      
         {
 
             title: 'Actions',
@@ -216,10 +205,21 @@ const QAPage = () => {
                             }}
                             type=""
                             onClick={() => {
-                                navigate(`/admin/qa/upsert?id=${entity.id}`)
+                                navigate(`/admin/qa/upsert?id=${entity.id}&answer=0`)
+                            }}
+                        />
+                         <QuestionCircleOutlined
+                             style={{
+                                fontSize: 20,
+                                color: 'green',
+                            }}
+                            type="Trả lời"
+                            onClick={() => {
+                                navigate(`/admin/qa/upsert?id=${entity.id}&answer=1`)
                             }}
                         />
                     </Access >
+                    
                     <Access
                         permission={ALL_PERMISSIONS.QAS.DELETE}
                         hideChildren
@@ -252,7 +252,8 @@ const QAPage = () => {
                 const clone = { ...params };
                 let filterParts: string[] = [];
               
-                if (clone.name) filterParts.push(`name ~ '${clone.name}'`);
+                if (clone.name) filterParts.push(`nameQ ~ '${clone.nameQ}'`);
+                if (clone.contentQ) filterParts.push(`contentQ ~ '${clone.contentQ}'`);
         
                 // Lọc theo app check is_admin và app
                 if (is_admin && clone?.app) {

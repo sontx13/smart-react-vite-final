@@ -30,6 +30,8 @@ const ViewUpsertQA = (props: any) => {
     let location = useLocation();
     let params = new URLSearchParams(location.search);
     const id = params?.get("id"); // qa id
+    const answer = params?.get("answer");
+    const isAnswerMode = answer === "1";
     const [dataUpdate, setDataUpdate] = useState<IQA | null>(null);
     const [form] = Form.useForm();
 
@@ -170,8 +172,12 @@ const ViewUpsertQA = (props: any) => {
                         {
                             title: <Link to="/admin/qa">Quản lý hỏi đáp</Link>,
                         },
-                        {
-                            title: 'Cập nhật hỏi đáp',
+                       {
+                            title: isAnswerMode
+                                ? 'Trả lời hỏi đáp'
+                                : dataUpdate?.id
+                                ? 'Cập nhật hỏi đáp'
+                                : 'Tạo mới hỏi đáp',
                         },
                     ]}
                 />
@@ -184,9 +190,13 @@ const ViewUpsertQA = (props: any) => {
                         onFinish={onFinish}
                         submitter={
                             {
-                                searchConfig: {
+                                 searchConfig: {
                                     resetText: "Hủy",
-                                    submitText: <>{dataUpdate?.id ? "Cập nhật QA" : "Tạo mới QA"}</>
+                                    submitText: isAnswerMode
+                                        ? "Trả lời hỏi đáp"
+                                        : dataUpdate?.id
+                                        ? "Cập nhật QA"
+                                        : "Tạo mới QA",
                                 },
                                 onReset: () => navigate('/admin/qa'),
                                 render: (_: any, dom: any) => <FooterToolbar>{dom}</FooterToolbar>,
@@ -201,6 +211,7 @@ const ViewUpsertQA = (props: any) => {
                                 <ProFormText
                                     label="Người hỏi"
                                     name="nameQ"
+                                    disabled={isAnswerMode}
                                     rules={[
                                         { required: true, message: 'Vui lòng không bỏ trống' },
                                     ]}
@@ -212,7 +223,14 @@ const ViewUpsertQA = (props: any) => {
                                 <ProFormText
                                     label="Email Người hỏi"
                                     name="emailQ"
-                                    rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}
+                                    disabled={isAnswerMode}
+                                    rules={[
+                                        { required: true, message: 'Vui lòng không bỏ trống' },
+                                        { 
+                                            type: 'email', 
+                                            message: 'Email không hợp lệ, vui lòng nhập đúng định dạng (ví dụ: ten@domain.com)' 
+                                        }
+                                    ]}
                                     placeholder="Cấp độ"
                                 />
                             </Col>
@@ -220,7 +238,14 @@ const ViewUpsertQA = (props: any) => {
                                 <ProFormText
                                     label="Phone Người hỏi"
                                     name="phoneQ"
-                                    rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}
+                                    disabled={isAnswerMode}
+                                    rules={[
+                                            { required: true, message: 'Vui lòng không bỏ trống' },
+                                            {
+                                                pattern: /^(0|\+84)(\d{9})$/,
+                                                message: 'Số điện thoại không hợp lệ, vui lòng nhập dạng 0xxxxxxxxx hoặc +84xxxxxxxxx',
+                                            },
+                                        ]}
                                     placeholder="Phone Người hỏi"
                                 />
                             </Col>

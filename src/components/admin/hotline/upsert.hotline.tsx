@@ -69,7 +69,8 @@ const ViewUpsertHotline = (props: any) => {
                         thumbUrl: `${import.meta.env.VITE_BACKEND_URL}/storage/hotline/${res.data.icon}`
                     }]);
 
-                    
+                     setValue(res.data.description); 
+
                     setApps([
                         {
                             label: res.data.app?.name as string,
