@@ -60,7 +60,8 @@ const convertToInstant = (dateStr?: string): Date | null => {
   const [day, month, year] = datePart.split("/").map(Number);
   const [hour, minute] = timePart.split(":").map(Number);
 
-  return new Date(year, month - 1, day, hour, minute);
+  // Tạo Date theo UTC để không bị lệch múi giờ
+  return new Date(Date.UTC(year, month - 1, day, hour, minute, 0));
 };
 
 

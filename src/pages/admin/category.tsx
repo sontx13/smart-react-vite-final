@@ -33,7 +33,7 @@ const CategoryPage = () => {
     //console.log("is_admin=="+is_admin);
     //console.log("app=="+ JSON.stringify(app));
 
-    const convertToInstant = (dateStr?: string): Date | null => {
+const convertToInstant = (dateStr?: string): Date | null => {
   if (!dateStr) return null;
 
   const parts = dateStr.trim().split(" ");
@@ -43,7 +43,8 @@ const CategoryPage = () => {
   const [day, month, year] = datePart.split("/").map(Number);
   const [hour, minute] = timePart.split(":").map(Number);
 
-  return new Date(year, month - 1, day, hour, minute);
+  // Tạo Date theo UTC để không bị lệch múi giờ
+  return new Date(Date.UTC(year, month - 1, day, hour, minute, 0));
 };
 
     const dispatch = useAppDispatch();
